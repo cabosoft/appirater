@@ -52,7 +52,7 @@ NSString *const kAppiraterReminderRequestDate		= @"kAppiraterReminderRequestDate
 
 NSString *templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
 
-static NSString *_appId;
+static NSString *_appId = nil;
 static double _daysUntilPrompt = 30;
 static NSInteger _usesUntilPrompt = 20;
 static NSInteger _significantEventsUntilPrompt = -1;
@@ -78,6 +78,10 @@ static BOOL _modalOpen = false;
 
 + (void) setAppId:(NSString *)appId {
     _appId = appId;
+}
+
++(BOOL) enabled {
+    return (_appId.length > 0);
 }
 
 + (void) setDaysUntilPrompt:(double)value {

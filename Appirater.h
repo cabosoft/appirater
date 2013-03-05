@@ -170,6 +170,11 @@ extern NSString *const kAppiraterReminderRequestDate;
 + (void) setAppId:(NSString*)appId;
 
 /*
+ Returns YES if appId has been set.
+ */
++(BOOL) enabled;
+
+/*
  Users will need to have the same version of your app installed for this many
  days before they will be prompted to rate it.
  */
