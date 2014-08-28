@@ -166,7 +166,7 @@ static BOOL _alwaysUseMainBundle = NO;
     static NSBundle *bundle = nil;
 
     if (!bundle) {
-    	if (_	alwaysUseMainBundle) {
+    	if (_alwaysUseMainBundle) {
 	        bundle = [NSBundle mainBundle];
 	    } else {
 		    if (!bundle) {
