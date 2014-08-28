@@ -163,21 +163,29 @@ static BOOL _alwaysUseMainBundle = NO;
 
 + (NSBundle *)bundle
 {
-    NSBundle *bundle;
+    static NSBundle *bundle = nil;
 
-    if (_alwaysUseMainBundle) {
-        bundle = [NSBundle mainBundle];
-    } else {
-        NSURL *appiraterBundleURL = [[NSBundle mainBundle] URLForResource:@"Appirater" withExtension:@"bundle"];
+    if (!bundle) {
+    	if (_	alwaysUseMainBundle) {
+	        bundle = [NSBundle mainBundle];
+	    } else {
+		    if (!bundle) {
+		        NSString *bundlePath = [NSBundle.mainBundle pathForResource:@"Appirater" ofType:@"bundle"];
+		        bundle = [NSBundle bundleWithPath:bundlePath];
 
-        if (appiraterBundleURL) {
-            // Appirater.bundle will likely only exist when used via CocoaPods
-            bundle = [NSBundle bundleWithURL:appiraterBundleURL];
-        } else {
-            bundle = [NSBundle mainBundle];
-        }
-    }
+		        NSString *language = NSLocale.preferredLanguages.count? NSLocale.preferredLanguages.firstObject: @"en";
+		        if (![bundle.localizations containsObject:language]) {
+		            language = [language componentsSeparatedByString:@"-"].firstObject;
+		        }
+		        if ([bundle.localizations containsObject:language]) {
+		            bundlePath = [bundle pathForResource:language ofType:@"lproj"];
+		        }
 
+		        bundle = [NSBundle bundleWithPath:bundlePath] ?: NSBundle.mainBundle;
+		    }
+	    }
+	}
+	
     return bundle;
 }
 
